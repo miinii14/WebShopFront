@@ -13,6 +13,8 @@ const Login = ( {setId, setLoggedIn} ) => {
     setId('')
     setLoggedIn(false)
 
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).*$/
+
     if ('' === login) {
       setError('Please enter your login')
       return
@@ -25,6 +27,11 @@ const Login = ( {setId, setLoggedIn} ) => {
   
     if (password.length < 7) {
       setError('The password must be 8 characters or longer')
+      return
+    }
+
+    if(!passwordRegex.test(password)){
+      setError('The password must contain letters and numbers')
       return
     }
 
@@ -42,16 +49,19 @@ const Login = ( {setId, setLoggedIn} ) => {
       const response = await fetch('http://localhost:8080/login', requestOptions)
       const result = await response.json()
 
+      console.log(response)
+      console.log(result)
+
       if(response?.ok){
         setId(result.id)
         setLoggedIn(true)
         navigate('/')
       } else {
-        setAuthorizationError('Invalid login or password')
+        setError(response.message)
       }
 
     } catch (error) {
-      setAuthorizationError('Invalid login or password')
+      setError('Invalid login or password')
       console.error('Unexpected error', error)
     }    
   }

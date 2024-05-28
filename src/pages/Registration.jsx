@@ -1,19 +1,19 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
-import LogInFrame from '../Components/LogInFrame/LogInFrame'
+import RegistrationFrame from '../Components/RegistrationFrame/RegistrationFrame';
 import Header from '../Components/Header/Header'
 
-const Login = ( {setId, setLoggedIn, loggedIn} ) => {
+const Registration = ({loggedIn, setLoggedIn}) => {
   const navigate = useNavigate();
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
   const [error, setError] = useState('')
 
   const onButtonClick = async () => {
     setError('')
-    setId('')
-    setLoggedIn(false)
-
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).*$/
 
     if ('' === login) {
@@ -43,26 +43,18 @@ const Login = ( {setId, setLoggedIn, loggedIn} ) => {
         'Content-Type': 'application/json',
         'Authorization': 'Basic ' + btoa(authString)
       },
-      body: JSON.stringify({ login, password })
+      body: JSON.stringify({ login, password, email, name, lastName})
     };
 
     try {
-      const response = await fetch('http://localhost:8080/login', requestOptions)
-      const result = await response.json()
-
-      console.log(response)
-      console.log(result)
+      const response = await fetch('http://localhost:8080/register', requestOptions)
 
       if(response?.ok){
-        setId(result.id)
-        setLoggedIn(true)
-        navigate('/')
-      } else {
-        setError(response.message)
-      }
+        navigate('/login')
+      } 
 
     } catch (error) {
-      setError('Invalid login or password')
+      setError('User with such login already exists')
       console.error('Unexpected error', error)
     }    
   }
@@ -70,10 +62,9 @@ const Login = ( {setId, setLoggedIn, loggedIn} ) => {
   return (
     <>
       <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
-      <LogInFrame login={login} setLogin={setLogin} password={password} setPassword={setPassword} error={error} onButtonClick={onButtonClick}/>
+      <RegistrationFrame name={name} setName={setName} lastName={lastName} setLastName={setLastName} email={email} setEmail={setEmail} login={login} setLogin={setLogin} password={password} setPassword={setPassword} error={error} onButtonClick={onButtonClick} />
     </>
   )
 }
 
-
-export default Login
+export default Registration

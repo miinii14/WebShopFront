@@ -1,0 +1,49 @@
+.products{
+  margin-top: 50px;
+  display: flex;
+  gap: 5px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.productCard{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  width: 21.7%;
+  padding: 20px;
+  border: solid rgba(0, 0, 0, 0.5) 1px;
+  border-radius: 10px;
+  background-color: rgb(220, 220, 255);
+  cursor: pointer;
+  transition: .2s;
+  margin-bottom: 20px;
+}
+
+.productCard:hover{
+  background-color: rgb(170, 170, 255);
+}
+
+.productCard h3{
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.productCard p{
+  font-size: 18px;
+}
+
+.buyButton{
+  background-color: rgb(103, 250, 103);
+  width: 100px;
+  padding: 3px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.button{
+  display: flex;
+  margin: 0 auto;
+}

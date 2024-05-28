@@ -1,0 +1,25 @@
+.header{
+  display: flex;
+  position: sticky;
+  justify-content: flex-end;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background-color: rgb(220, 220, 255);
+  align-items: center;
+}
+
+.header ul{
+  display: flex;
+  float: right;
+  gap: 100px;
+}
+
+.header li {
+  margin-left: 20px;
+  list-style: none;
+  font-size: 20px;
+  cursor: pointer;
+}

@@ -1,19 +1,10 @@
-.logIn{
+.registration{
   display: flex;
   flex-direction: column;
   height: 100vh;
   justify-content: center;
   align-items: center;
   gap: 10px;
-}
-
-.logIn h2{
-  font-size: 30px;
-}
-
-.logIn label{
-  color: red;
-  font-size: 20px;
 }
 
 .inputText{
@@ -30,9 +21,5 @@
   border: solid rgba(0, 0, 0, 0.5) 1px;
   border-radius: 10px;
   background-color: rgb(220, 220, 255);
-  cursor: pointer;
-}
-
-a{
   cursor: pointer;
 }

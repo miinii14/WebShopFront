@@ -1,0 +1,16 @@
+.addGame{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.textArea{
+  font-size: 20px;
+  width: 500px;
+  height: 200px;
+  font-family: Arial, Helvetica, sans-serif;
+  resize: none;
+}

@@ -1,10 +1,13 @@
 import React from 'react'
+import Products from '../Components/Products/Products'
+import Header from '../Components/Header/Header'
 
-const Home = () => {
+const Home = ({setLoggedIn, loggedIn, id}) => {
   return (
     <>
+      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
       <div className="container">
-        <h2>HOME</h2>
+        <Products loggedIn={loggedIn} id={id}/>
       </div>
     </>
   )

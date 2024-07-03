@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import LogInFrame from '../Components/LogInFrame/LogInFrame'
 import Header from '../Components/Header/Header'
 
-const Login = ( {setId, setLoggedIn, loggedIn} ) => {
+const Login = ( {setId, setLoggedIn, loggedIn ,setAdmin } ) => {
   const navigate = useNavigate();
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
@@ -14,8 +14,6 @@ const Login = ( {setId, setLoggedIn, loggedIn} ) => {
     setId('')
     setLoggedIn(false)
 
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).*$/
-
     if ('' === login) {
       setError('Please enter your login')
       return
@@ -25,28 +23,16 @@ const Login = ( {setId, setLoggedIn, loggedIn} ) => {
       setError('Please enter a password')
       return
     }
-  
-    if (password.length < 7) {
-      setError('The password must be 8 characters or longer')
-      return
-    }
 
-    if(!passwordRegex.test(password)){
-      setError('The password must contain letters and numbers')
-      return
-    }
-
-    const authString = `admin:admin`;
     const requestOptions = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + btoa(authString)
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({ login, password })
     };
 
-    try {
+    try { 
       const response = await fetch('http://localhost:8080/login', requestOptions)
       const result = await response.json()
 
@@ -56,9 +42,8 @@ const Login = ( {setId, setLoggedIn, loggedIn} ) => {
       if(response?.ok){
         setId(result.id)
         setLoggedIn(true)
+        setAdmin(result.roles[0].name == "ADMIN" ? true : false);
         navigate('/')
-      } else {
-        setError(response.message)
       }
 
     } catch (error) {

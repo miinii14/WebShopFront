@@ -15,6 +15,11 @@ function App() {
     return saved !== null ? JSON.parse(saved) : false;
   });
 
+  const [isAdmin, setAdmin] = useState(() => {
+    const saved = localStorage.getItem('isAdmin');
+    return saved !== null ? JSON.parse(saved) : false;
+  })
+
   const [id, setId] = useState(() => {
     const savedId = localStorage.getItem('id');
     return savedId !== null ? savedId : '';
@@ -28,12 +33,16 @@ function App() {
     localStorage.setItem('id', id);
   }, [id]);
 
+  useEffect(() => {
+    localStorage.setItem('isAdmin', isAdmin);
+  }, [isAdmin]);
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Home id={id} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
-          <Route path='/login' element={<Login id={id} setLoggedIn={setLoggedIn} setId={setId}/>}/>
+          <Route index element={<Home id={id} loggedIn={loggedIn} setLoggedIn={setLoggedIn} isAdmin={isAdmin} setAdmin={setAdmin}/>}/>
+          <Route path='/login' element={<Login id={id} setLoggedIn={setLoggedIn} setId={setId} setAdmin={setAdmin}/>}/>
           <Route path='/register' element={<Registration id={id} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
           <Route path='/addGame' element={<AddGame id={id} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}/>
           <Route path='/cart' element={<Cart loggedIn={loggedIn} id={id} setLoggedIn={setLoggedIn} />} />

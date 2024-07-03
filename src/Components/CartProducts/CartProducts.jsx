@@ -2,27 +2,32 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './CartProducts.css'
 
-const authString = btoa(`admin:admin`)
-
 const CartProducts = ({userId}) => {
   const [products, setProducts] = useState([])
   const [ids, setIds] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
-    const requestOptions = {
-      headers: {
-        'Authorization': 'Basic ' + authString
-      }
-    }
-
     const getCart = async () => {
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+
       try {
         let response = await fetch(`http://localhost:8080/getCart?userId=${userId}`, requestOptions);
         let result = await response.json();
 
+        console.log(result)
+
         if (response.ok) {
-          setIds(result);
+          let i = []
+          result.forEach(element => {
+            i.push(element.id)
+          });
+          setIds(i);
         }
       } catch (error) {
         console.error('Failed to fetch cart:', error);
@@ -34,10 +39,11 @@ const CartProducts = ({userId}) => {
 
   useEffect(() => {
     const requestOptions = {
+      method: 'GET',
       headers: {
-        'Authorization': 'Basic ' + authString
+        'Content-Type': 'application/json'
       }
-    }
+    };
 
     const fetchProducts = async () => {
 
@@ -61,11 +67,10 @@ const CartProducts = ({userId}) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + authString
       }
     }
     try {
-      let response = await fetch(`http://localhost:8080/buy?userId=${userId}`, requestOptions);
+      let response = await fetch(`http://localhost:8080/buyProducts?userId=${userId}`, requestOptions);
       if(response?.ok){
         navigate('/')
       }

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import AddGameFrame from '../Components/AddGameFrame/AddGameFrame'
 import Header from '../Components/Header/Header'
 
-const AddGame = ({loggedIn, setLoggedIn}) => {
+const AddGame = ({loggedIn, setLoggedIn, id}) => {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [error, setError] = useState('')
@@ -16,24 +16,23 @@ const AddGame = ({loggedIn, setLoggedIn}) => {
   }, [])
 
   const onButtonClick = async () => {
-    const authString = `admin:admin`;
     const requestOptions = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + btoa(authString)
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({ name, description })
     };
 
     try {
-      const response = await fetch('http://localhost:8080/createProduct', requestOptions)
+      const response = await fetch(`http://localhost:8080/createProduct?userId=${id}`, requestOptions)
 
       if(response?.ok){
         navigate('/')
       }
+      
     } catch (error) {
-      setError(error.message)
+      setError('Error')
       console.error(error.message)
     }
   }

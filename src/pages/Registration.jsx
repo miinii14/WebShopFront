@@ -14,7 +14,6 @@ const Registration = ({loggedIn, setLoggedIn}) => {
 
   const onButtonClick = async () => {
     setError('')
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).*$/
 
     if ('' === login) {
       setError('Please enter your login')
@@ -25,25 +24,13 @@ const Registration = ({loggedIn, setLoggedIn}) => {
       setError('Please enter a password')
       return
     }
-  
-    if (password.length < 7) {
-      setError('The password must be 8 characters or longer')
-      return
-    }
 
-    if(!passwordRegex.test(password)){
-      setError('The password must contain letters and numbers')
-      return
-    }
-
-    const authString = `admin:admin`;
     const requestOptions = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + btoa(authString)
       },
-      body: JSON.stringify({ login, password, email, name, lastName})
+      body: JSON.stringify({ login, password })
     };
 
     try {

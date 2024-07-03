@@ -10,18 +10,23 @@ const LibraryProducts = ({userId}) => {
 
   useEffect(() => {
     const requestOptions = {
+      method: 'GET',
       headers: {
-        'Authorization': 'Basic ' + authString
+        'Content-Type': 'application/json'
       }
-    }
+    };
 
     const getLibrary = async () => {
       try {
-        let response = await fetch(`http://localhost:8080/library?userId=${userId}`, requestOptions);
+        let response = await fetch(`http://localhost:8080/getLibrary?userId=${userId}`, requestOptions);
         let result = await response.json();
 
         if (response.ok) {
-          setIds(result);
+          let i = []
+          result.forEach(element => {
+            i.push(element.id)
+          });
+          setIds(i);
         }
       } catch (error) {
         console.error('Failed to fetch cart:', error);
@@ -33,10 +38,11 @@ const LibraryProducts = ({userId}) => {
 
   useEffect(() => {
     const requestOptions = {
+      method: 'GET',
       headers: {
-        'Authorization': 'Basic ' + authString
+        'Content-Type': 'application/json'
       }
-    }
+    };
 
     const fetchProducts = async () => {
 

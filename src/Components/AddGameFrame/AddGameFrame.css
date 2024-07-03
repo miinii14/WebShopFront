@@ -1,3 +1,8 @@
+.addGame label{
+  color: red;
+  font-size: 20px;
+}
+
 .addGame{
   display: flex;
   flex-direction: column;

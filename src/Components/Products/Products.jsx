@@ -3,7 +3,7 @@ import './Products.css'
 import ProductCard from './ProductCard'
 import { useNavigate } from 'react-router-dom'
 
-const Products = ({loggedIn, id}) => {
+const Products = ({loggedIn, id, isAdmin}) => {
   const [products, setProducts] = useState([])
   const [error, setError] = useState('')
   const navigate = useNavigate();
@@ -52,10 +52,12 @@ const Products = ({loggedIn, id}) => {
       <label className='error'>{error}</label>
       <div className="products">
         {products.map((product) => (
-          <ProductCard loggedIn={loggedIn} userId={id} id={product.id} name={product.name} description={product.description}/>
+          <ProductCard loggedIn={loggedIn} isAdmin={isAdmin} userId={id} id={product.id} name={product.name} description={product.description}/>
         ))}
       </div>
-      <input className='button' type="button" value='Add your own game' onClick={onButtonClick}/>
+      {
+        isAdmin ? (<input className='button' type="button" value='Add game' onClick={onButtonClick}/>) : <></>
+      } 
     </>
   )
 }
